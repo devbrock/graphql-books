@@ -1,28 +1,32 @@
-import React from 'react';
-import './App.css';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
-import BookList from './components/BookList';
-import AddBook from './components/AddBook';
+import React from "react";
+import "./App.css";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "@apollo/react-hooks";
+import BookList from "./components/BookList";
+import AddBook from "./components/AddBook";
 
 const client = new ApolloClient({
-	uri: 'http://localhost:4000/graphql',
+  uri: "http://localhost:4000/graphql",
+  onError: ({ networkError, graphQLErrors }) => {
+    console.log("graphQLErrors", graphQLErrors);
+    console.log("networkError", networkError);
+  }
 });
 
 function App() {
-	return (
-		<ApolloProvider client={client}>
-			<div className="min-h-screen bg-gray-200">
-				<div className="font-display container mx-auto">
-					<h1 className="font-bold text-6xl text-blue-900 text-center">
-						Reading List
-					</h1>
-					<BookList />
-					<AddBook />
-				</div>
-			</div>
-		</ApolloProvider>
-	);
+  return (
+    <ApolloProvider client={client}>
+      <div className="min-h-screen bg-gray-200">
+        <div className="font-display container mx-auto">
+          <h1 className="font-bold text-6xl text-blue-900 text-center">
+            Reading List
+          </h1>
+          <BookList />
+          <AddBook />
+        </div>
+      </div>
+    </ApolloProvider>
+  );
 }
 
 export default App;
